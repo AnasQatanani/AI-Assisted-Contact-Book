@@ -29,7 +29,7 @@ def add_contact(conn, cursor):
     conn.commit()
     print("Contact added successfully!")
 
-# Fixed bug
+# Code generated from additional prompt for viewing contacts
 def view_all_contacts(cursor):
     cursor.execute("""
     SELECT c.id, c.name, GROUP_CONCAT(DISTINCT e.email) as emails, GROUP_CONCAT(DISTINCT p.phone) as phones
@@ -65,9 +65,17 @@ def search_contacts(cursor):
     else:
         print("No contacts found.")
 
-# Code generated from prompt 1
+# Code generated from prompt 1 and additional prompt for error handling
 def delete_contact(conn, cursor):
     contact_id = input("Enter contact ID to delete: ")
+    
+    # First check if the contact exists
+    cursor.execute("SELECT id FROM contacts WHERE id = ?", (contact_id,))
+    if not cursor.fetchone():
+        print("There is no contact to remove with that ID.")
+        return
+    
+    # If contact exists, proceed with deletion
     cursor.execute("DELETE FROM contacts WHERE id = ?", (contact_id,))
     cursor.execute("DELETE FROM emails WHERE contact_id = ?", (contact_id,))
     cursor.execute("DELETE FROM phones WHERE contact_id = ?", (contact_id,))
