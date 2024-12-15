@@ -1,0 +1,5 @@
+	1.	“Create a Python script for a contact book application using SQLite. Include functions to add, view, search, and delete contacts.”
+	2.	“Add a text-based user interface (TUI) to the contact book application.”
+	3.	“Implement multiple email and phone number functionality for each contact.”
+	4.	“Add a search function that can find contacts by name, email, or phone number.”
+	5.	“Implement error handling and input validation for the contact book application.”
