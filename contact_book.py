@@ -29,6 +29,25 @@ def add_contact(conn, cursor):
     conn.commit()
     print("Contact added successfully!")
 
+# Fixed bug
+def view_all_contacts(cursor):
+    cursor.execute("""
+    SELECT c.id, c.name, GROUP_CONCAT(DISTINCT e.email) as emails, GROUP_CONCAT(DISTINCT p.phone) as phones
+    FROM contacts c
+    LEFT JOIN emails e ON c.id = e.contact_id
+    LEFT JOIN phones p ON c.id = p.contact_id
+    GROUP BY c.id
+    """)
+    contacts = cursor.fetchall()
+    if contacts:
+        for contact in contacts:
+            print(f"ID: {contact[0]}, Name: {contact[1]}")
+            print(f"Emails: {contact[2]}")
+            print(f"Phones: {contact[3]}")
+            print("------------------------")
+    else:
+        print("No contacts found.")
+
 # Code generated from prompts 1 and 4
 def search_contacts(cursor):
     search_term = input("Enter search term (name, email, or phone): ")
